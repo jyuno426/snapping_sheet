@@ -54,7 +54,19 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
   }
 
   void _overrideScroll(double dragAmount) {
-    if (!_allowScrolling) widget.dragUpdate(dragAmount);
+    if (!_allowScrolling) {
+      final cur = widget.scrollController.position.pixels;
+      final min = widget.scrollController.position.minScrollExtent;
+      final max = widget.scrollController.position.maxScrollExtent;
+
+      if ((_currentDragDirection == DragDirection.up && cur == max) ||
+          (_currentDragDirection == DragDirection.down && cur == min)) {
+        widget.dragUpdate(dragAmount);
+        print("override success");
+      } else {
+        print("override fail");
+      }
+    }
   }
 
   void _setLockPosition() {
