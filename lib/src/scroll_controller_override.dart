@@ -64,6 +64,7 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
         widget.dragUpdate(dragAmount);
         print("override success");
       } else {
+        widget.scrollController.position.setPixels(cur + dragAmount);
         print("override fail");
       }
     }
