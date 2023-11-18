@@ -143,8 +143,8 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
         _overrideScroll(dragValue);
       },
       onPointerUp: (_) {
-        if (!_allowScrolling)
-          widget.scrollController.jumpTo(_currentLockPosition);
+        // if (!_allowScrolling)
+        //   widget.scrollController.jumpTo(_currentLockPosition);
         widget.dragEnd();
       },
       child: widget.child,
