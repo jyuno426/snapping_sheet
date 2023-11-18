@@ -39,8 +39,8 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
   @override
   void initState() {
     super.initState();
-    widget.scrollController.removeListener(_onScrollUpdate);
-    widget.scrollController.addListener(_onScrollUpdate);
+    // widget.scrollController.removeListener(_onScrollUpdate);
+    // widget.scrollController.addListener(_onScrollUpdate);
   }
 
   @override
@@ -64,7 +64,7 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
         widget.dragUpdate(dragAmount);
         print("override success");
       } else {
-        widget.scrollController.position.setPixels(cur + dragAmount);
+        // widget.scrollController.jumpTo(cur + dragAmount);
         print("override fail");
       }
     }
