@@ -40,8 +40,8 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
   @override
   void initState() {
     super.initState();
-    // widget.scrollController.removeListener(_onScrollUpdate);
-    // widget.scrollController.addListener(_onScrollUpdate);
+    widget.scrollController.removeListener(_onScrollUpdate);
+    widget.scrollController.addListener(_onScrollUpdate);
   }
 
   @override
@@ -51,7 +51,8 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
   }
 
   void _onScrollUpdate() {
-    if (!_allowScrolling) _lockScrollPosition(widget.scrollController);
+    if (!_allowScrolling && dragging)
+      _lockScrollPosition(widget.scrollController);
   }
 
   void _overrideScroll(double dragAmount) {
