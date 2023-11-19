@@ -35,6 +35,7 @@ class ScrollControllerOverride extends StatefulWidget {
 class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
   DragDirection? _currentDragDirection;
   double _currentLockPosition = 0;
+  bool dragging = false;
 
   @override
   void initState() {
@@ -59,14 +60,11 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
       final min = widget.scrollController.position.minScrollExtent;
       // final max = widget.scrollController.position.maxScrollExtent;
 
-      if (
-          // (_currentDragDirection == DragDirection.up && cur == max) ||
+      if (dragging ||
           (_currentDragDirection == DragDirection.down && cur == min)) {
+        dragging = true;
         widget.dragUpdate(dragAmount);
         print("override success");
-      } else {
-        // widget.scrollController.jumpTo(cur + dragAmount);
-        print("override fail");
       }
     }
   }
@@ -146,6 +144,7 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
       onPointerUp: (_) {
         // if (!_allowScrolling)
         //   widget.scrollController.jumpTo(_currentLockPosition);
+        dragging = false;
         widget.dragEnd();
       },
       child: widget.child,
