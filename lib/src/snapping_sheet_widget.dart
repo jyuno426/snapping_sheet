@@ -36,6 +36,8 @@ class SnappingSheet extends StatefulWidget {
   /// Is often the main content of a page or app.
   final Widget? child;
 
+  final Widget? bottomOverlay;
+
   /// Prevents overflow drag.
   ///
   /// If set to true, the snapping sheet can not be dragged over or under the
@@ -113,6 +115,7 @@ class SnappingSheet extends StatefulWidget {
     ],
     this.initialSnappingPosition,
     this.child,
+    this.bottomOverlay,
     this.lockOverflowDrag = false,
     this.controller,
     this.onSheetMoved,
@@ -141,6 +144,7 @@ class SnappingSheet extends StatefulWidget {
     ],
     this.initialSnappingPosition,
     this.child,
+    this.bottomOverlay,
     this.lockOverflowDrag = false,
     this.controller,
     this.onSheetMoved,
@@ -380,6 +384,19 @@ class _SnappingSheetState extends State<SnappingSheet>
                 ),
                 sheetData: widget.sheetBelow,
               ),
+
+              if (widget.bottomOverlay != null)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: OnDragWrapper(
+                    axis: widget.axis,
+                    dragEnd: _dragEnd,
+                    dragUpdate: _dragSheet,
+                    child: widget.bottomOverlay!,
+                  ),
+                )
             ],
           ),
         );
