@@ -35,6 +35,7 @@ class ScrollControllerOverride extends StatefulWidget {
 class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
   DragDirection? _currentDragDirection;
   double _currentLockPosition = 0;
+  bool dragging = false;
 
   @override
   void initState() {
@@ -50,11 +51,25 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
   }
 
   void _onScrollUpdate() {
-    if (!_allowScrolling) _lockScrollPosition(widget.scrollController);
+    if (!_allowScrolling && dragging) {
+      _lockScrollPosition(widget.scrollController);
+    }
   }
 
   void _overrideScroll(double dragAmount) {
-    if (!_allowScrolling) widget.dragUpdate(dragAmount);
+    if (!_allowScrolling) {
+      final cur = widget.scrollController.position.pixels;
+      final min = widget.scrollController.position.minScrollExtent;
+      final max = widget.scrollController.position.maxScrollExtent;
+
+      final dn = _currentDragDirection == DragDirection.down && cur == min;
+      final ux = _currentDragDirection == DragDirection.up && cur == max;
+
+      if (dragging || dn || ux) {
+        dragging = true;
+        widget.dragUpdate(dragAmount);
+      }
+    }
   }
 
   void _setLockPosition() {
@@ -130,8 +145,7 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
         _overrideScroll(dragValue);
       },
       onPointerUp: (_) {
-        if (!_allowScrolling)
-          widget.scrollController.jumpTo(_currentLockPosition);
+        dragging = false;
         widget.dragEnd();
       },
       child: widget.child,
