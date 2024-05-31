@@ -51,7 +51,7 @@ class _ScrollControllerOverrideState extends State<ScrollControllerOverride> {
   }
 
   void _onScrollUpdate() {
-    if (!_allowScrolling && dragging) {
+    if (dragging) {
       _lockScrollPosition(widget.scrollController);
     }
   }
