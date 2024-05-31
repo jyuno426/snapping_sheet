@@ -253,8 +253,10 @@ class _SnappingSheetState extends State<SnappingSheet>
     if (_animationController.isAnimating) {
       _animationController.stop();
     }
-    setState(() {
-      _currentPosition = _getNewPosition(dragAmount);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _currentPosition = _getNewPosition(dragAmount);
+      });
     });
   }
 
